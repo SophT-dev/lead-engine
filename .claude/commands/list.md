@@ -19,10 +19,11 @@ Wait for their input, then run the pipeline:
 - Copy the resulting URL from the address bar
 - Save to output/[campaign]/prospeo-url.txt
 
-**Steps 4–8 (mix of API + Chrome):**
-- Pull leads via Prospeo API (node scripts/prospeo.js)
-- Verify top 25 leads: use Chrome to open each company website one by one so the user can see you checking them — score each against the ICP (node scripts/verify.js for data extraction, then score with lead-scorer prompt)
-- If avg score < 7.0: go back to Prospeo in Chrome, adjust filters, re-run — max 3 iterations
-- Take screenshot of Prospeo results page using Chrome
-- Present URL + scores + screenshot — WAIT for approval
-- After approval only: run node scripts/export.js
+**Steps 4–8 (Chrome only — NO API calls until approval):**
+- On the Prospeo results page, scroll through and read the visible leads directly from the page — do NOT call the API
+- For each of the top 25 leads shown: click their entry in Prospeo to open their profile, read their details (title, company, seniority, location), then open their company website in a new tab to check for ICP signals
+- Score each lead 0–10 against the ICP using the lead-scorer prompt
+- If avg score < 7.0: stay in Prospeo, adjust filters, re-run search — max 3 iterations
+- Take a screenshot of the Prospeo results page
+- Present the Prospeo URL + scores + screenshot — WAIT for approval
+- After approval only: call Prospeo API (node scripts/prospeo.js) to pull the full enriched list, then run node scripts/export.js
