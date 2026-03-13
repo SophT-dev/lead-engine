@@ -1,0 +1,16 @@
+{
+  "name": "lead-engine",
+  "version": "1.0.0",
+  "description": "Cold email list building and enrichment engine powered by Claude + Prospeo",
+  "type": "module",
+  "scripts": {
+    "prospeo": "node scripts/prospeo.js",
+    "verify": "node scripts/verify.js",
+    "export": "node scripts/export.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.3.1"
+  }
+}
