@@ -6,8 +6,9 @@ Say exactly: "Ready. Paste your Upwork chat URL or meeting transcript."
 
 Wait for their input, then run the pipeline:
 
-**Steps 1–2 (no Chrome needed — use WebSearch + WebFetch):**
-- Parse the input (WebFetch if Upwork URL, parse directly if transcript)
+**Steps 1–2 (Chrome for Upwork, WebSearch + WebFetch for research):**
+- If input is an Upwork URL: use Chrome to open the chat room, scroll up to load all messages, read the full conversation
+- If input is a transcript: parse it directly
 - Research the client's company, competitors, case studies via WebSearch + WebFetch
 - Build the ICP, save to output/[campaign]/icp.json
 - Show the user the ICP summary
