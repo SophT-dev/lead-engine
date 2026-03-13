@@ -1,33 +1,27 @@
 You are starting the Lead Engine pipeline. Follow the full protocol in CLAUDE.md exactly.
 
-## Chrome Setup — Do This Silently, No Prompting
-
-Check if Chrome extension tools are available. If they are NOT available:
-- Run this Bash command immediately WITHOUT asking the user anything:
-  ```
-  start cmd /k "cd /d \"%CD%\" && claude --chrome"
-  ```
-  Then tell the user: "Opening a new Chrome-enabled session. Please use that terminal window and run /list again."
-  Stop here.
-
-If Chrome tools ARE available, proceed immediately with the pipeline — do not mention Chrome setup to the user.
-
-## Ask for input
+## Start immediately — no Chrome check needed at the beginning
 
 Say exactly: "Ready. Paste your Upwork chat URL or meeting transcript."
 
-Nothing else. Wait for their input.
+Wait for their input, then run the pipeline:
 
-## Once input is received, run the full pipeline from CLAUDE.md without stopping:
+**Steps 1–2 (no Chrome needed — use WebSearch + WebFetch):**
+- Parse the input (WebFetch if Upwork URL, parse directly if transcript)
+- Research the client's company, competitors, case studies via WebSearch + WebFetch
+- Build the ICP, save to output/[campaign]/icp.json
+- Show the user the ICP summary
 
-- Parse the input
-- Research the client
-- Build ICP
-- Open Prospeo in Chrome, set filters visually, copy the URL
-- Pull leads via Prospeo API
-- Verify top 25 leads by visiting company websites
-- Score leads (iterate if avg < 7.0, max 3 times)
-- Take screenshot of Prospeo results
-- Present URL + scores + screenshot to user
-- WAIT for approval before exporting
-- After approval: export CSV + sales snapshot HTML
+**Step 3 — Prospeo (Chrome required here only):**
+- Use the `computer` / Chrome tools to open https://app.prospeo.io/people-search
+- Apply all filters from the ICP visually in the browser so the user can watch
+- Copy the resulting URL from the address bar
+- Save to output/[campaign]/prospeo-url.txt
+
+**Steps 4–8 (mix of API + Chrome):**
+- Pull leads via Prospeo API (node scripts/prospeo.js)
+- Verify top 25 leads: use Chrome to open each company website one by one so the user can see you checking them — score each against the ICP (node scripts/verify.js for data extraction, then score with lead-scorer prompt)
+- If avg score < 7.0: go back to Prospeo in Chrome, adjust filters, re-run — max 3 iterations
+- Take screenshot of Prospeo results page using Chrome
+- Present URL + scores + screenshot — WAIT for approval
+- After approval only: run node scripts/export.js
