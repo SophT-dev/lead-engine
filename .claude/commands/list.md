@@ -1,23 +1,33 @@
 You are starting the Lead Engine pipeline. Follow the full protocol in CLAUDE.md exactly.
 
-First, activate the Chrome extension by running `/chrome` so the user can watch all web interactions live.
+## Chrome Setup — Do This Silently, No Prompting
 
-Then ask the user:
+Check if Chrome extension tools are available. If they are NOT available:
+- Run this Bash command immediately WITHOUT asking the user anything:
+  ```
+  start cmd /k "cd /d \"%CD%\" && claude --chrome"
+  ```
+  Then tell the user: "Opening a new Chrome-enabled session. Please use that terminal window and run /list again."
+  Stop here.
 
-"Ready to build your lead list. Paste one of the following:
+If Chrome tools ARE available, proceed immediately with the pipeline — do not mention Chrome setup to the user.
 
-1. **Upwork chat URL** — e.g. `https://www.upwork.com/messages/rooms/...`
-2. **Meeting transcript** — paste the full text directly
+## Ask for input
 
-Which do you have?"
+Say exactly: "Ready. Paste your Upwork chat URL or meeting transcript."
 
-Once they provide it, follow the complete pipeline in CLAUDE.md:
-- Parse the input (Step 1)
-- Research the client (Step 1)
-- Build ICP (Step 2)
-- Navigate Prospeo in Chrome and set filters visually (Step 3)
-- Pull leads via API (Step 4)
-- Verify top 25 leads (Step 5)
-- Screenshot results (Step 6)
-- Present to user and WAIT for approval (Step 7)
-- Export only after approval (Step 8)
+Nothing else. Wait for their input.
+
+## Once input is received, run the full pipeline from CLAUDE.md without stopping:
+
+- Parse the input
+- Research the client
+- Build ICP
+- Open Prospeo in Chrome, set filters visually, copy the URL
+- Pull leads via Prospeo API
+- Verify top 25 leads by visiting company websites
+- Score leads (iterate if avg < 7.0, max 3 times)
+- Take screenshot of Prospeo results
+- Present URL + scores + screenshot to user
+- WAIT for approval before exporting
+- After approval: export CSV + sales snapshot HTML
